@@ -1,27 +1,31 @@
 extends KinematicBody2D
 
-var inputVector : Vector2
 var velocity : Vector2
 
 var moving = false
 var destination = Vector2()
 
-export (int) var acceleration = 200
+var acceleration = 5
+var deceleration = 2
+var maxSpeed = 250
+
 
 func _unhandled_input(event):
 	if(event.is_action_pressed("move")):
 		moving = true
-		destination = get_global_mouse_position()
 	if(event.is_action_released("move")):
 		moving = false
+
 func _physics_process(delta):
-	if(moving):
-		velocity = position.direction_to(get_global_mouse_position()) * acceleration
+	destination = get_global_mouse_position()
+	
+	if(moving && (position.distance_to(destination) > 5) && velocity.length() < maxSpeed):
+		velocity = velocity + (position.direction_to(destination) * acceleration)
 	else:
-		velocity = velocity * 0
+		if(velocity.length() > 0):
+			velocity = velocity - (velocity.normalized() * deceleration)
 	
 	move_and_slide(velocity)
-
 
 func _process(delta):
 	look_at(get_global_mouse_position())
