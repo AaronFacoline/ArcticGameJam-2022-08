@@ -3,6 +3,7 @@ extends KinematicBody2D
 const projectilePath = preload("res://characters/Enemies/projectile.tscn")
 
 var destination = Vector2()
+var speed = 1.4
 #onready var collision = $CollisionPolygon2D
 
 func _ready():
@@ -18,7 +19,8 @@ func _process(delta):
 	rotate(0.015)
 	
 func _physics_process(delta):
-	var collision = move_and_collide(Vector2(0000.1,0))
+	destination = get_parent().get_node("Player").position
+	var collision = move_and_collide(position.direction_to(destination) * speed)
 	if collision:
 		queue_free()
 	
