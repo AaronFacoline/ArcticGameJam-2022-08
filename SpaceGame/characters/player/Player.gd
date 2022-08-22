@@ -6,9 +6,9 @@ var velocity : Vector2
 var moving = false
 var destination = Vector2()
 
-var acceleration = 5
-var deceleration = 2
-var maxSpeed = 250
+var acceleration = 0.4
+var deceleration = 0.2
+var maxSpeed = 3
 
 var sprite1 = preload("res://assets/player.png")
 var sprite2 = preload("res://assets/playermove.png")
@@ -40,7 +40,11 @@ func _physics_process(delta):
 		if(velocity.length() > 0):
 			velocity = velocity - (velocity.normalized() * deceleration)
 	
-	move_and_slide(velocity)
+	var collision = move_and_collide(velocity)
+	if collision:
+		get_tree().change_scene("res://StartMenu.tscn")
+		queue_free()
+	
 
 func _process(delta):
 	look_at(get_global_mouse_position())

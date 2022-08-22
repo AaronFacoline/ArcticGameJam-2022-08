@@ -9,4 +9,7 @@
 position = Vector2( 614, 354 )
 
 [node name="Square" parent="." instance=ExtResource( 2 )]
-position = Vector2( 282, 514 )
+position = Vector2( 244, 537 )
+
+[node name="Square2" parent="." instance=ExtResource( 2 )]
+position = Vector2( 943, 200 )
